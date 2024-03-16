@@ -1,0 +1,5 @@
+tqdm
+numpy
+ipympl
+jupiterlab
+scikit-image
