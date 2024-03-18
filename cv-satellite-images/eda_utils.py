@@ -50,7 +50,7 @@ def data2df(disaster_list, data):
 def show_image(img):
     plt.imshow(img.astype(np.uint8))
 
-def show_df(dd, seed=5707):
+def show_df(dd, seed=None):
     random_state = seed
     l = dd.shape[0]
     
