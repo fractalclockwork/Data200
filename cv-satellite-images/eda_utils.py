@@ -47,7 +47,6 @@ def data2df(disaster_list, data):
     df['disaster_type'] = df['disaster'].str.extract(disaster_regex)
     return df
 
-
 def show_image(img):
     plt.imshow(img.astype(np.uint8))
 
