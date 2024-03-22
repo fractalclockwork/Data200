@@ -3,11 +3,9 @@ channels:
   - conda-forge
 dependencies:
   - python=3.12
-  - matplotlib
   - pathlib
   - tqdm
   - numpy
-  - ipympl
   - pandas
   - seaborn
   - jupyterlab
