@@ -5,9 +5,18 @@
 In disaster situations, it is important for emergency response efforts to have access to quick and accurate information about an area in order to respond effectively. This project will explore how data science techniques can be useful for such efforts.
 
 
-# Useage
-Makefile targets have been provided for convenience of the user. To install and run the EDA notebook type 'make setup run'.
 
+# Usage
+
+Clone the repo and then run 'make setup run'.
+This will setup a conda environment then launch a Jupyer Lab session.
+If your browser doesn't launch automatically the server is typically avalable at 'localhot:8888'.
+
+```
+$ git clone https://github.com/fractalclockwork/Data200.git
+```
+
+A number of other makefile targets have been provided for convenience of the user. 
 
 ```
 $ make 
@@ -30,7 +39,7 @@ clean:
 ```
 
 
-# Files and Directories
+# Directories
 ```
 .
 ├── Data
