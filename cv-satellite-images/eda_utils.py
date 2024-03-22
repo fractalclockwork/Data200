@@ -28,6 +28,9 @@ disaster_regex = r'(fire|hurricane|flood)'
 df['disaster_type'] = df['disaster'].str.extract(disaster_regex)
 df.sample(5)
 """
+# Calculate average color of an image
+def avg_color(img):
+    return np.mean(img, axis=(0, 1))
 
 def data2df(disaster_list, data):    
     # Create a list of our dictionaries
@@ -45,10 +48,42 @@ def data2df(disaster_list, data):
     df = pd.DataFrame(data_list)
     disaster_regex = r'(fire|hurricane|flood)'
     df['disaster_type'] = df['disaster'].str.extract(disaster_regex)
+    df['avg_color'] = df['img'].apply(avg_color)
     return df
 
 def show_image(img):
     plt.imshow(img.astype(np.uint8))
+
+def reshape_image(image):
+    return image.reshape(-1, 3)
+
+# This is a rather slow and ugly function.
+# this is really a dumb thing to do anyway.
+def show_color_density(dd):
+    '''
+    # this is going to be rather slow
+    pixels = []
+    for img in dd.img:  
+        reshaped_img = img.reshape(-1,3)
+        pixels.append(reshaped_img)
+    pixels = np.vstack(pixels)
+    '''
+    '''
+    packed_pixels = np.array(dd['img'].tolist())
+    pixels = packed_pixels.reshape(-1,3)
+    
+    '''
+    #pixels = np.concatenate([img.reshape(-1, 3) for img in dd['img']])
+    pixels = np.concatenate(dd['img'].apply(reshape_image).tolist())
+    
+    non_black_pixels = pixels[np.any(pixels > [0, 0, 0], axis=-1)]
+    df_pixels = pd.DataFrame(non_black_pixels, columns=['Red', 'Green', 'Blue'])
+
+    for color in ['Red', 'Green', 'Blue']:
+        sns.kdeplot(df_pixels[color], color=color.lower(),  alpha=0.5, label=color)
+    plt.xlabel('Color Value (0-255)')
+    plt.legend()
+    plt.grid()
 
 def show_df(dd, seed=None):
     random_state = seed
