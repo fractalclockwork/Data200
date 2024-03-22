@@ -6,7 +6,8 @@ In disaster situations, it is important for emergency response efforts to have a
 
 
 # Useage
-Makefile targets have been provided for convenience of the user.
+Makefile targets have been provided for convenience of the user. To install and run the EDA notebook type 'make setup run'.
+
 
 ```
 $ make 
@@ -18,7 +19,7 @@ setup:
 data: 
     Uses 'gdown' to retrive the dataset.
 
-environment
+environment:
     Configures a conda environment with all the required tools and libraries.
 
 run:
