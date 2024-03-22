@@ -1,0 +1,19 @@
+name: data200s
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - matplotlib
+  - pathlib
+  - tqdm
+  - numpy
+  - ipympl
+  - pandas
+  - seaborn
+  - jupyterlab
+  - ipykernel
+  - scikit-image
+  - scikit-learn
+  - black
+  - flake8
+  - gdown
