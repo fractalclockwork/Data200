@@ -1,6 +1,7 @@
 name: data200s
 channels:
   - conda-forge
+  - default
 dependencies:
   - python=3.12
   - pathlib

@@ -85,7 +85,7 @@ def show_color_density(dd):
     plt.legend()
     plt.grid()
 
-def show_df(dd, seed=None):
+def show_df(dd, seed=None, share=None, title=None):
     random_state = seed
     l = dd.shape[0]
     
@@ -108,8 +108,9 @@ def show_df(dd, seed=None):
     # print(cols, rows)
 
     #fig, ax = plt.subplots(rows,cols, figsize=(12,3*rows))
-    fig, ax = plt.subplots(rows,cols)
-    #print(ax)
+    fig, ax = plt.subplots(rows,cols, sharex=share, sharey=share, figsize=(10,3*rows))
+    fig.suptitle(title)
+        
     for i, ax in enumerate(ax.flat):
         #display(df.iloc[i])
         img = df.iloc[i].img
@@ -117,7 +118,11 @@ def show_df(dd, seed=None):
         damage = df.iloc[i].label
         ax.imshow(img.astype(np.uint8))
         ax.set_title(f'{disaster_type}:{damage}')
-        ax.set_xticks([])  # Disable x ticks
-        ax.set_yticks([])  # Disable y ticks
+        #ax.set_xticks([])  # Disable x ticks
+        #ax.set_yticks([])  # Disable y ticks
     plt.subplots_adjust(wspace=0.3)
     plt.tight_layout()
+
+
+
+
