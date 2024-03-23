@@ -20,7 +20,7 @@ A number of other makefile targets have been provided for convenience of the use
 
 ```
 $ make 
-clean        data         environment  run          setup
+clean        data         environment  release  run          setup
 
 setup:
     Configures a environment and downloads data. 
@@ -30,6 +30,9 @@ data:
 
 environment:
     Configures a conda environment with all the required tools and libraries.
+
+release:
+    Package main branch for submission to gradescope.
 
 run:
     Starts the conda enironment and runs EDA notebook.
