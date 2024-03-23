@@ -29,3 +29,5 @@ run:
 clean:
 	$(MAKE) -C Source clean 
 
+release:
+	bash 'Utils/do_release.sh'
