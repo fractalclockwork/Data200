@@ -2,6 +2,8 @@ import numpy as np
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
+from torch.utils.data import Dataset
+from sklearn.preprocessing import OneHotEncoder
 
 def load_images(images_path):
     """
@@ -105,3 +107,44 @@ def plot_label_distribution(labels, ax=None, title="Label Distribution"):
     if created_fig:
         plt.tight_layout()
         plt.show()
+
+class DisasterImageDataset(Dataset):
+    """
+    Pytorch Dataset class for loading images.
+
+    Init Args:
+        images_path (str): Path to npz file containing compressed images.
+        labels_path (str): Path to npy file containing matched image labels (for damage level classification)
+        disaster_type (str or list): String denoting which disaster type the image is from (for disaster type classification)
+        transform_fn (func, optional): Function to pass in to transform/process images.
+                                            If None, images are not transformed.
+
+    Requires path to images and labels. Input transform function can be 
+    """
+    def __init__(self, images_path, labels_path, disaster_type, transform_fn=None):
+        self.images = load_images(images_path)
+        self.labels = load_labels(labels_path)
+        self.transform = transform_fn
+        
+        if isinstance(disaster_type, str):
+            self.type = [disaster_type for i in range(len(self.labels))]
+
+        enc = OneHotEncoder(sparse_output=False)
+        dtypes = np.array(["fire", "flood", "hurricane"])
+        dtypes = dtypes.reshape(-1, 1)
+        enc.fit(dtypes)
+        self.type = enc.transform(np.array(self.type).reshape(-1, 1))
+    
+    def __len__(self):
+        return len(self.images)
+    
+    def __getitem__(self, idx):
+
+        X = self.images[idx]
+        Y_label = self.labels[idx]
+        Y_type = self.type[idx]
+
+        if self.transform:
+            X = self.transform(X)
+        
+        return X, Y_label, Y_type
