@@ -18,3 +18,4 @@ dependencies:
   - gdown
   - unzip
   - zip
+  - opencv
