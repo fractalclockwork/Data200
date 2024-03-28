@@ -23,8 +23,11 @@ $(DATA_FILE):
 #test:
 #	$(MAKE) -C Source test
 
-run:
-	bash 'Utils/run_conda.sh' 
+run_eda:
+	bash 'Utils/run_conda_eda.sh' 
+
+run_model:
+	bash 'Utils/run_conda_model.sh' 
 
 clean:
 	$(MAKE) -C Source clean 

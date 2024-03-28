@@ -19,3 +19,4 @@ dependencies:
   - unzip
   - zip
   - opencv
+  - memory-profiler

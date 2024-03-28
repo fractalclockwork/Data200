@@ -3,6 +3,59 @@ import os
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+import zipfile
+import re
+import io
+from tqdm import tqdm
+
+#Let's make some enhancements! 
+def read_files_from_zip(zip_file_path, regex_pattern):
+    """
+    This function reads files from a zip file that matches a given regex pattern.
+    It assumes the regex pattern contains two groups (train|test) and a nominative group (some_name).
+    
+    Parameters:
+    zip_file_path (str): The path to the zip file.
+    regex_pattern (str): The regex pattern to match the files.
+
+    Returns:
+    dict: A dictionary with the name as key, and a sub-dictionary of type and file as values.
+    """
+    data_dict = {}  # Dictionary with name as key, and sub-dict of type and file as value
+
+   # Open the zip file
+    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+        # List all files
+        all_files = zip_ref.namelist()
+
+        # Filter files based on the regex pattern and create a dictionary
+        for file in all_files:
+            match = re.search(regex_pattern, file)
+            if match:
+                filtered = list(match.groups())
+                data_type = [s for s in filtered if re.search(r'(test|train)', s)][0]
+                filtered.remove(data_type)
+                data_name = filtered[0]
+                data_dict[data_name] = {'type':data_type, 'file':file}
+
+        # Read in the data for each file
+        for name in tqdm(data_dict.keys(), ascii=False, desc=f"Importing data from zip"):         
+            with zip_ref.open(data_dict[name]['file']) as f:
+                bytes_io = io.BytesIO(f.read())
+                
+                match = re.search(r'_images', data_dict[name]['file'])
+                if match:
+                    #print('Reading Image:')
+                    data = np.load(bytes_io, allow_pickle=True)
+                    images=[image[1] for image in data.items()]
+                    data_dict[name]['images'] = images
+                else:
+                    #print('Reading Label:')
+                    data_dict[name]['labels'] = np.load(bytes_io, allow_pickle=True)
+    print('Found the following datasets: ', list(data_dict.keys()))
+    return data_dict
+
+
 def load_images(images_path):
     """
     Load images from a specified .npz file.
