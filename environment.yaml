@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - default
 dependencies:
-  - python=3.12
+  - python=3.11
   - pathlib
   - tqdm
   - numpy
@@ -19,4 +19,5 @@ dependencies:
   - unzip
   - zip
   - opencv
-  - memory-profiler
+  - tensorflow
+  - pillow
