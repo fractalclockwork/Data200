@@ -2,13 +2,18 @@ import numpy as np
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
+import pandas as pd
 
 import zipfile
 import re
 import io
 from tqdm import tqdm
 
+
 #Let's make some enhancements! 
+def show_balance(df):
+    display(df.groupby('type')['label'].value_counts())
+
 def read_files_from_zip(zip_file_path, regex_pattern):
     """
     This function reads files from a zip file that matches a given regex pattern.
@@ -55,6 +60,23 @@ def read_files_from_zip(zip_file_path, regex_pattern):
     print('Found the following datasets: ', list(data_dict.keys()))
     return data_dict
 
+def data2pd(image_dataset, label_dataset=None):
+    # replace type with disaster type
+    for key in image_dataset.keys():
+        #print(key)
+        regex = r'(?:fire|flood|hurricane)'
+        matches = re.findall(r'(fire|flood|hurricane)', key)
+        disaster_type = matches[0] if matches else None
+        image_dataset[key]['type'] = disaster_type
+        if label_dataset != None:
+            image_dataset[key]['labels'] = label_dataset[key]['labels'] # add labels
+    
+    df = pd.DataFrame(image_dataset)
+    if label_dataset != None:
+        df = df.T.explode(['images', 'labels']).drop(columns = ['file']).rename(columns={'labels':'label', 'images':'image'})
+    else:
+        df = df.T.explode(['images']).drop(columns = ['file']).rename(columns={'images':'image'})
+    return df.reset_index()
 
 def load_images(images_path):
     """
