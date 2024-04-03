@@ -11,6 +11,50 @@ from tqdm import tqdm
 
 
 #Let's make some enhancements! 
+from tensorflow.keras.models import load_model
+
+def load_model_data(name):
+    '''
+    Loads model, history, notes
+    '''
+    path = '../Data'
+    model_path = path + '/models/'+ f'{name}'
+    model_history_path = model_path + '/history.pkl'
+
+    print(model_path)
+    print(model_history_path)
+    
+    # Note: Delete models directory to rebuild.
+    if (os.path.exists(model_path) & os.path.isfile(model_history_path)): 
+        model = load_model(model_path)
+        with open(model_history_path, 'rb') as db_file:
+            #history = pickle.load(db_file)
+            db_pkl = pickle.load(db_file)
+            history = db_pkl['history']
+            notes = db_pkl['notes']
+            print('Gherkin injested.')
+        return model, history, notes
+    else:
+        print("Model not found.")
+        return None, None, None
+    
+
+def save_model_data(name, model, history, notes=[] ):
+    '''
+    Save model for transfer learning
+    '''
+    path = '../Data'
+    model_path = path + '/models/'+ f'{name}'
+    model_history_path = model_path + '/history.pkl'
+    
+    model.save(model_path)
+    with open(model_history_path, 'wb') as db_file:
+        #pickle.dump(history, file = db_file)
+        pickle.dump(obj={'history':history,
+                    'notes':notes}, file=db_file)    
+        print('Gherkin created.')
+
+
 def show_balance(df):
     display(df.groupby('type')['label'].value_counts())
 

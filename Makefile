@@ -13,6 +13,9 @@ else
 	echo 'y' | conda env create -f environment.yaml
 endif
 
+env_clean:
+	conda enc remove --name data200s
+
 setup: environment $(DATA_FILE)
 data: $(DATA_FILE)
 	(cd Data; unzip ../$(DATA_FILE))
