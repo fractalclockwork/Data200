@@ -1,8 +1,9 @@
 name: data200s
 channels:
   - conda-forge
+  - default
 dependencies:
-  - python=3.12
+  - python=3.11
   - pathlib
   - tqdm
   - numpy
@@ -16,3 +17,8 @@ dependencies:
   - flake8
   - gdown
   - pytorch
+  - unzip
+  - zip
+  - opencv
+  - tensorflow
+  - pillow

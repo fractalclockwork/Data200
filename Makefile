@@ -13,6 +13,9 @@ else
 	echo 'y' | conda env create -f environment.yaml
 endif
 
+env_clean:
+	conda enc remove --name data200s
+
 setup: environment $(DATA_FILE)
 data: $(DATA_FILE)
 	(cd Data; unzip ../$(DATA_FILE))
@@ -23,9 +26,14 @@ $(DATA_FILE):
 #test:
 #	$(MAKE) -C Source test
 
-run:
-	bash 'Utils/run_conda.sh' 
+run_eda:
+	bash 'Utils/run_conda_eda.sh' 
+
+run_model:
+	bash 'Utils/run_conda_model.sh' 
 
 clean:
 	$(MAKE) -C Source clean 
 
+release:
+	bash 'Utils/do_release.sh'
