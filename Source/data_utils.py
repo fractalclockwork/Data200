@@ -124,6 +124,7 @@ def data2pd(image_dataset, label_dataset=None):
     return df.reset_index()
 from torch.utils.data import Dataset
 from sklearn.preprocessing import OneHotEncoder
+import torch
 
 def load_images(images_path):
     """
@@ -236,21 +237,28 @@ class DisasterImageDataset(Dataset):
         images_path (str): Path to npz file containing compressed images.
         labels_path (str): Path to npy file containing matched image labels (for damage level classification)
         disaster_type (str or list): String denoting which disaster type the image is from (for disaster type classification)
+        balance_fn (func, optional): Function to pass in to remove/resample/balance labels.
+                                            If None, labels are not balanced. 
         transform_fn (func, optional): Function to pass in to transform/process images.
                                             If None, images are not transformed.
 
     Requires path to images and labels. Input transform function can be 
     """
-    def __init__(self, images_path, labels_path, disaster_type, transform_fn=None):
-        self.images = load_images(images_path)
-        self.labels = load_labels(labels_path)
+    def __init__(self, images_path, labels_path, disaster_type, balance_fn, transform_fn):
+    
         self.transform = transform_fn
-        
+        self.images = transform_fn(load_images(images_path))
+        self.labels = load_labels(labels_path)
+
+        keep_idx = balance_fn(self.labels)
+        self.images = self.images[keep_idx]
+        self.labels = self.labels[keep_idx]
+
         if isinstance(disaster_type, str):
             self.type = [disaster_type for i in range(len(self.labels))]
 
         enc = OneHotEncoder(sparse_output=False)
-        dtypes = np.array(["fire", "flood", "hurricane"])
+        dtypes = np.array(["fire", "flood"])
         dtypes = dtypes.reshape(-1, 1)
         enc.fit(dtypes)
         self.type = enc.transform(np.array(self.type).reshape(-1, 1))
@@ -260,11 +268,16 @@ class DisasterImageDataset(Dataset):
     
     def __getitem__(self, idx):
 
-        X = self.images[idx]
-        Y_label = self.labels[idx]
-        Y_type = self.type[idx]
-
-        if self.transform:
-            X = self.transform(X)
+        X = torch.tensor(self.images[idx], dtype=torch.float32)
+        Y_label = torch.tensor(self.labels[idx], dtype=torch.float32)
+        Y_type = torch.tensor(self.type[idx], dtype=torch.float32)
         
         return X, Y_label, Y_type
+    
+    def display(self, idx):
+
+        img = self.images[idx]
+        img = np.transpose(img, (1, 2, 0))
+        plt.imshow(img, vmin=0, vmax=1)
+        plt.axis("off")
+        plt.show()
