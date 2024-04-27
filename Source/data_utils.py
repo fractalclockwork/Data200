@@ -14,11 +14,10 @@ import pickle
 #Let's make some enhancements! 
 from tensorflow.keras.models import load_model
 
-def load_model_data(name):
+def load_model_data(name, path='../Data'):
     '''
     Loads model, history, notes
     '''
-    path = '../Data'
     model_path = path + '/models/'+ f'{name}'
     model_history_path = model_path + '/history.pkl'
 
@@ -40,11 +39,10 @@ def load_model_data(name):
         return None, None, None
     
 
-def save_model_data(name, model, history, notes=[] ):
+def save_model_data(name, model, history, notes=[], path = '../Data' ):
     '''
     Save model for transfer learning
     '''
-    path = '../Data'
     model_path = path + '/models/'+ f'{name}'
     model_history_path = model_path + '/history.pkl'
     
