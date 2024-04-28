@@ -4,7 +4,7 @@
 
 ENV_NAME = data200s
 DATA_FILE = 'Data/sp24_grad_project_data.zip'
-MODLE_FILE = 'Data/model_data.zip'
+MODEL_FILE = 'Data/model_data.zip'
 
 environment:
 ifneq (,$(shell conda list --name $(ENV_NAME)))
