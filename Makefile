@@ -15,7 +15,7 @@ else
 endif
 
 env_clean:
-	conda enc remove --name data200s
+	conda env remove --name data200s
 
 setup: environment $(DATA_FILE) $(MODEL_FILE)
 
