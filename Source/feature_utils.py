@@ -214,3 +214,19 @@ def get_local_binary_pattern(image, radius=1, method="uniform"):
     n_points = 8 * radius
     lbp = local_binary_pattern(image_gray.astype(np.uint8), n_points, radius, method)
     return lbp
+
+def gabor_filter(img):
+    # Define Gabor filter parameters
+    ksize = (16, 16)  # size of the filter
+    sigma = 3.0       # standard deviation of the Gaussian function
+    theta = 1.0       # orientation of the normal to the parallel stripes
+    lambd = 25.0      # wavelength of the sinusoidal factor
+    gamma = 0.02      # spatial aspect ratio
+    psi = 0.0         # phase offset
+
+    # Apply Gabor filter to each color layer
+    filtered_img = np.zeros_like(img)
+    for i in range(3):
+        filtered_img[:, :, i] = cv2.filter2D(img[:, :, i], cv2.CV_32F, cv2.getGaborKernel(ksize, sigma, theta, lambd, gamma, psi))
+
+    return filtered_img

@@ -4,6 +4,7 @@
 
 ENV_NAME = data200s
 DATA_FILE = 'Data/sp24_grad_project_data.zip'
+MODEL_FILE = 'Data/model_data.zip'
 
 environment:
 ifneq (,$(shell conda list --name $(ENV_NAME)))
@@ -14,17 +15,19 @@ else
 endif
 
 env_clean:
-	conda enc remove --name data200s
+	conda env remove --name data200s
 
-setup: environment $(DATA_FILE)
+setup: environment $(DATA_FILE) $(MODEL_FILE)
+
 data: $(DATA_FILE)
-	(cd Data; unzip ../$(DATA_FILE))
 
 $(DATA_FILE):
 	bash 'Utils/get_data.sh'
 
-#test:
-#	$(MAKE) -C Source test
+model: $(MODEL_FILE)
+
+$(MODEL_FILE):
+	bash 'Utils/get_model.sh'
 
 run_eda:
 	bash 'Utils/run_conda_eda.sh' 
@@ -37,3 +40,7 @@ clean:
 
 release:
 	bash 'Utils/do_release.sh'
+
+pack_model:
+	bash 'Utils/pack_model.sh'
+
