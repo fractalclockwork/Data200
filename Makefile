@@ -3,8 +3,8 @@
 .PHONY: environment setup
 
 ENV_NAME = data200s
-DATA_FILE = 'Data/sp24_grad_project_data.zip'
-MODEL_FILE = 'Data/model_data.zip'
+DATA_FILE = 'data/sp24_grad_project_data.zip'
+MODEL_FILE = 'data/model_data.zip'
 
 environment:
 ifneq (,$(shell conda list --name $(ENV_NAME)))
@@ -22,25 +22,22 @@ setup: environment $(DATA_FILE) $(MODEL_FILE)
 data: $(DATA_FILE)
 
 $(DATA_FILE):
-	bash 'Utils/get_data.sh'
+	bash 'utils/get_data.sh'
 
 model: $(MODEL_FILE)
 
 $(MODEL_FILE):
-	bash 'Utils/get_model.sh'
+	bash 'utils/get_model.sh'
 
-run_eda:
-	bash 'Utils/run_conda_eda.sh' 
-
-run_model:
-	bash 'Utils/run_conda_model.sh' 
+run:
+	bash 'utils/run_conda_model.sh' 
 
 clean:
 	$(MAKE) -C Source clean 
 
 release:
-	bash 'Utils/do_release.sh'
+	bash 'utils/do_release.sh'
 
 pack_model:
-	bash 'Utils/pack_model.sh'
+	bash 'utils/pack_model.sh'
 

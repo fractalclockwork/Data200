@@ -35,7 +35,7 @@ release:
     Package main branch for submission to gradescope.
 
 run:
-    Starts the conda enironment and runs EDA notebook.
+    Starts the conda enironment and runs analysis notebook.
 
 clean:
     Removes all temporary files.
@@ -45,20 +45,20 @@ clean:
 # Directories
 ```
 .
-├── Data
-├── Docs
-├── Figures
-├── Source
+├── data
+├── narrative 
+├── figures
+├── analysis 
 └── Utils
 
-Data:
+data:
     Downloaded and decompressed data
-Doc:
-    Helpful documentation.
+narrative:
+    Documentation.
 Figure:
     Our generated figure.
-Source:
+analysis:
     Our Python libraries and Notebooks.
-Utils:
+utils:
     Helpful utils.
 ```

@@ -102,7 +102,7 @@ def show_balance(df):
     display(df.groupby("type")["label"].value_counts())
 
 
-def load_model_data(name, path="../Data"):
+def load_model_data(name, path="../data"):
     """
     Loads model, history, notes
     """
@@ -127,7 +127,7 @@ def load_model_data(name, path="../Data"):
         return None, None, None
 
 
-def save_model_data(name, model, history, notes=[], path="../Data"):
+def save_model_data(name, model, history, notes=[], path="../data"):
     """
     Save model for transfer learning
     """
