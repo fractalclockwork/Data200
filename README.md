@@ -55,7 +55,7 @@ data:
     Downloaded and decompressed data
 narrative:
     Documentation.
-Figure:
+figure:
     Our generated figure.
 analysis:
     Our Python libraries and Notebooks.
