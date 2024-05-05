@@ -21,3 +21,4 @@ dependencies:
   - opencv
   - tensorflow
   - pillow
+  - imbalanced-learn
