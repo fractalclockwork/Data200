@@ -4,7 +4,36 @@
 
 In disaster situations, it is important for emergency response efforts to have access to quick and accurate information about an area in order to respond effectively. This project will explore how data science techniques can be useful for such efforts.
 
+# Project Report, Presention Slides and Presentation Video
+[Video]<https://youtu.be/UwdOYl2VrcI>
 
+```
+narrative/
+├── Final_Project_Presentation.pdf
+├── Final_Project_Report.pdf
+└── README.md
+```
+
+# Directories
+```
+.
+├── data
+├── narrative 
+├── figures
+├── analysis 
+└── Utils
+
+data:
+    Downloaded and decompressed data
+narrative:
+    Documentation.
+figure:
+    Our generated figure.
+analysis:
+    Our Final Report, Presentation Slide, Modeling Notebooks and Libraries.
+utils:
+    Helpful utils to get dataset and pretrained models for transfer learning.
+```
 
 # Usage
 
@@ -42,23 +71,3 @@ clean:
 ```
 
 
-# Directories
-```
-.
-├── data
-├── narrative 
-├── figures
-├── analysis 
-└── Utils
-
-data:
-    Downloaded and decompressed data
-narrative:
-    Documentation.
-figure:
-    Our generated figure.
-analysis:
-    Our Python libraries and Notebooks.
-utils:
-    Helpful utils.
-```

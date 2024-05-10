@@ -1,5 +1,16 @@
 # See the README.md in this directory
 # and the Source diectory for a detailed decription.
+#
+# Project Report, Presention Slides and Presentation Video
+# maybe found at the following paths...
+#
+# narrative/
+# ├── Final_Project_Presentation.pdf
+# ├── Final_Project_Report.pdf
+# └── README.md
+#
+# Video: https://youtu.be/UwdOYl2VrcI
+
 .PHONY: environment setup
 
 ENV_NAME = data200s
